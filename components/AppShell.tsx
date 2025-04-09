@@ -1,5 +1,6 @@
 // components/layout/AppShell.tsx
 "use client"
+
 import React, {useState} from 'react';
 import {
   AppLayoutToolbar,
@@ -9,7 +10,7 @@ import {
   HelpPanel,
   SplitPanel,
 } from '@cloudscape-design/components'
-import AuthLinks from "@/components/AuthLinks";
+import SideNav from "@/components/SideNav";
 import TopNav from "@/components/TopNav";
 
 export default function AppShell({children, pageTitle}) {
@@ -25,7 +26,7 @@ export default function AppShell({children, pageTitle}) {
       navigationOpen={navigationIsOpen}
       onNavigationChange={({detail}) => setNavigationIsOpen(detail.open)}
 
-      navigation={AuthLinks()}
+      navigation={SideNav()}
       //toolsOpen={true}
       tools={<HelpPanel header={<h2>Overview</h2>}>Help content</HelpPanel>}
       content={<ContentLayout header={<Header variant="h1">{pageTitle}</Header>}>

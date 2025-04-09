@@ -1,6 +1,4 @@
 import NextAuth from "next-auth";
-// import type {JWTCallback, SessionCallback, SignInCallback, RedirectCallback} from "next-auth";
-
 import CognitoProvider from "next-auth/providers/cognito";
 import type {Provider} from 'next-auth/providers';
 
@@ -27,35 +25,6 @@ const providers: Provider[] = [
   }),
 ];
 
-// const authCallbacks = {
-//   authorized({auth: session, request: {nextUrl}}) {
-//     const isLoggedIn = !!session?.user;
-//     const isPublicPage = nextUrl.pathname.startsWith('/public');
-//
-//     return isPublicPage || isLoggedIn;
-//
-//      // Redirect unauthenticated users to login page
-//   },
-  // async jwt({token, account, user}: JWTCallback) {
-  //   if (account && user) {
-  //     token.id = user.id;
-  //     token.email = user.email;
-  //     token.accessToken = account.access_token;
-  //     token.idToken = account.id_token;
-  //   }
-  //   return token;
-  // },
-
-  // async session({session, token}: SessionCallback) {
-  //   if (token) {
-  //     session.user.id = token.id;
-  //     session.user.email = token.email;
-  //     session.accessToken = token.accessToken;
-  //     session.idToken = token.idToken;
-  //   }
-  //   return session;
-  // },
-
   // async signIn({user, account}: SignInCallback) {
   //   return true;
   // },
@@ -79,22 +48,37 @@ const handler = NextAuth({
         httpOnly: true,
         sameSite: "lax",
         path: '/',
-        domain: useSecureCookies ? '.solutions-subdomain-auth.vercel.sh' : undefined,
+        domain: useSecureCookies ? '.coffeeshot-com.vercel.app' : undefined,
         secure: useSecureCookies,
       },
     },
   },
   callbacks: {
-    async jwt({ token, account, user }) {
-      if (account && user) {
-        token.id = user.id;
-        token.email = user.email;
+    async jwt({ token, account, profile }) {
+      // console.log("🪵>> JWT callback", { account, profile });
+      if (account && profile) {
+        token.id = profile.sub;
+        token.email = profile.email;
         token.accessToken = account.access_token;
         token.idToken = account.id_token;
+        token.groups = profile["cognito:groups"] || [];
+
+        // ✅ Log the groups here
+        console.log("🔐 Cognito groups from profile:", profile["cognito:groups"]);
       }
       return token;
     },
-  }
+
+    // async session({ session, token }) {
+    //   session.user = session.user || {};
+    //   session.user.id = token.id;
+    //   session.user.email = token.email;
+    //   session.accessToken = token.accessToken;
+    //   session.idToken = token.idToken;
+    //   session.groups = token.groups || [];
+    //   return session;
+    // },
+  },
 });
 
 export { handler as GET, handler as POST };

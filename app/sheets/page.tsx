@@ -1,12 +1,12 @@
-import Link from "next/link";
-import Foo from "@/app/foo/foo";
+'use client';
+
 import AppShell from "@/components/AppShell";
+import Sheets from "@/app/sheets/sheets";
 
 export default function Home() {
   return (
     <AppShell pageTitle="Foo">
-      <Foo/>
-      <Link href="/">Go to Home</Link>
+      <Sheets/>
     </AppShell>
   );
 }
