@@ -1,10 +1,7 @@
 import React from 'react';
 import {TopNavigation, TopNavigationProps} from '@cloudscape-design/components';
 import {signIn, signOut, useSession} from 'next-auth/react';
-
-// const cognitoLogoutUrl = `https://coffeeshot.auth.ap-southeast-2.amazoncognito.com/logout?client_id=YOUR_CLIENT_ID&logout_uri=${encodeURIComponent("https://coffeeshot.com")}`;
-const logoutUrl = `${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}&logout_uri=${encodeURIComponent("https://coffeeshot.com")}`;
-
+import {getCognitoLogoutUrl} from "@/lib/auth/helpers";
 
 export default function TopNav() {
   const {data: session, status} = useSession()
@@ -28,23 +25,13 @@ export default function TopNav() {
           ],
           onItemClick: (item: any) => {
             if (item.detail.id === 'signout') signOut({ redirect: false }).then(() => {
-              // window.location.href = logoutUrl;
-              handleSignOut()
+              window.location.href = getCognitoLogoutUrl(window.location.origin)
             });
           },
         },
       ]
     }
 
-    function handleSignOut() {
-      const clientId = '7pp6v2jftg7f93okjl6m7ntqt2';
-      // const domain = 'https://coffeeshot.auth.ap-southeast-2.amazoncognito.com';
-      const domain = `${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}`;
-      window.location.href = `${domain}/logout?client_id=${clientId}&logout_uri=http%3A%2F%2Flocalhost:3000/about`
-    }
-// GET https://mydomain.auth.us-east-1.amazoncognito.com/logout?
-//   client_id=1example23456789&
-//   logout_uri=https%3A%2F%2Fwww.example.com%2Fwelcome
     return [
       {
         type: 'button',
