@@ -1,6 +1,5 @@
 {
   "buildCommand": "pnpm prisma generate next build",
   "ignoreCommand": "pnpm dlx turbo-ignore",
-  "installCommand": "pnpm install",
-  "outputDirectory": ".next"
+  "installCommand": "pnpm install"
 }
