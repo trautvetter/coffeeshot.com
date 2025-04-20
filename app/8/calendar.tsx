@@ -7,7 +7,7 @@ import Link from "@cloudscape-design/components/link";
 import SpaceBetween from "@cloudscape-design/components/space-between";
 import Header from "@cloudscape-design/components/header";
 
-import {eightyear} from "../../prisma/generated/client";
+import {eightyear} from "@/prisma/generated/client";
 import {useGetEightyearsQuery, useUpdateEightyearMutation} from "@/services/eightyearApi";
 import {StatusIndicator} from "@cloudscape-design/components";
 import { setSelectedId } from "@/lib/data/slices/panelSlice";

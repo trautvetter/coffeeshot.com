@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {useAddFooMutation, useDeleteFooMutation, useGetFoosQuery, useUpdateFooMutation,} from '@/services/fooApi';
-import {foo} from '../../prisma/generated/client';
+import {foo} from '@/prisma/generated/client';
 
 export function FooList() {
   const {data: foos, isLoading} = useGetFoosQuery(undefined, {

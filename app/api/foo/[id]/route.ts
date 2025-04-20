@@ -1,7 +1,7 @@
 // app/api/foo/[id]/route.ts
 import {deleteFoo, updateFoo} from "@/lib/data/foo";
 import {NextRequest} from "next/server";
-import {foo} from '../../../../prisma/generated/client';
+import {foo} from '@/prisma/generated/client';
 
 export async function PUT(
   req: NextRequest,

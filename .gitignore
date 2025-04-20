@@ -1,7 +1,7 @@
 # Node modules
 node_modules/
-.prisma/
-@prisma/
+# .prisma/
+# @prisma/
 
 # Output of builds
 .next/

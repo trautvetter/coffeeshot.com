@@ -1,6 +1,6 @@
 // app/api/eightyear/[id]/route.ts
 import {NextRequest} from "next/server";
-import {eightyear} from "../../../../prisma/generated/client";
+import {eightyear} from "@/prisma/generated/client";
 import {updateEightyear} from "@/lib/data/8year";
 
 export async function PUT(
