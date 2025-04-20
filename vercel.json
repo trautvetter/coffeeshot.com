@@ -1,5 +1,5 @@
 {
-  "buildCommand": "prisma generate && next build",
+  "buildCommand": "next build",
   "ignoreCommand": "pnpm dlx turbo-ignore",
   "installCommand": "pnpm install"
 }
