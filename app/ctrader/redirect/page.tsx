@@ -1,6 +1,7 @@
 import AppShell from "@/components/AppShell";
 import CtraderRedirect from "@/app/ctrader/redirect/ctrader-redirect";
 import Link from "next/link";
+import {Suspense} from 'react';
 
 export default function Home() {
   const params = new URLSearchParams({
@@ -9,7 +10,7 @@ export default function Home() {
     scope: "accounts",
     product: "web"
   });
-  const url = `https://api.example.com/token?${params.toString()}`;
+
   return (
     <AppShell pageTitle="cTrader">
       <Link
@@ -18,7 +19,9 @@ export default function Home() {
         Get token
       </Link>
 
-      <CtraderRedirect/>
+      <Suspense fallback={<p>Authorizing...</p>}>
+        <CtraderRedirect/>
+      </Suspense>
     </AppShell>
   );
 }
