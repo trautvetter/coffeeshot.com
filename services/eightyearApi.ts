@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {eightyear} from '@prisma/client';
+import {eightyear} from '../prisma/generated/client';
 
 export const eightyearApi = createApi({
   reducerPath: 'eightyearApi',

@@ -1,5 +1,5 @@
 import {prisma} from '@/lib/db/prisma';
-import {foo} from '@prisma/client';
+import {foo} from '@/prisma/generated/client';
 
 
 export async function addFoo(data: { bar: string; baz: number | null }) {

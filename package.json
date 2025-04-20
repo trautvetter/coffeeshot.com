@@ -15,7 +15,7 @@
     "@cloudscape-design/components": "^3.0.937",
     "@cloudscape-design/global-styles": "^1.0.39",
     "@neondatabase/serverless": "^0.10.4",
-    "@prisma/client": "^6.6.0",
+    "@prisma/client": "^6.7.0-dev.25",
     "@reduxjs/toolkit": "^1.9.0",
     "date-fns": "^4.1.0",
     "next": "latest",
@@ -31,7 +31,7 @@
     "css-loader": "^7.1.2",
     "eslint": "^8",
     "eslint-config-next": "^15",
-    "prisma": "^6.6.0",
+    "prisma": "^6.7.0-dev.25",
     "style-loader": "^4.0.0",
     "turbo": "^2.5.0",
     "typescript": "5.8.2"

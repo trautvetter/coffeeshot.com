@@ -1,6 +1,6 @@
 import {prisma} from "@/lib/db/prisma";
-import {eightyear} from '@prisma/client';
-import {Prisma} from "@/generated/prisma";
+import {eightyear} from '@/prisma/generated/client';
+import {Prisma} from "@/prisma/generated/prisma";
 
 export async function getEightyear(): Promise<eightyear[]> {
   return await prisma.eightyear.findMany({

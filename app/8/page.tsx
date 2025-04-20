@@ -4,7 +4,7 @@ import AppShell, {AppShellRef} from "@/components/AppShell";
 import Calendar from "@/app/8/calendar";
 import {useEffect, useRef, useState} from "react";
 import Panel from "@/app/8/panel";
-import {eightyear} from "@prisma/client";
+import {eightyear} from "../../prisma/generated/client";
 import {format} from 'date-fns';
 
 export default function Home() {

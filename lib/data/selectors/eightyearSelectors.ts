@@ -1,7 +1,7 @@
 // lib/data/selectors/eightyearSelectors.ts
 import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../../store/store';
-import {eightyear} from '@prisma/client';
+import {eightyear} from '../../../prisma/generated/client';
 
 export const selectEightyears = (state: RootState) =>
   state.eightyearApi.queries['getEightyears(undefined)']?.data ?? [];

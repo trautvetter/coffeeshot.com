@@ -1,6 +1,6 @@
 // services/fooApi.ts
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {foo} from '@prisma/client';
+import {foo} from '../prisma/generated/client';
 
 export const fooApi = createApi({
   reducerPath: 'fooApi',
