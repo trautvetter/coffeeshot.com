@@ -21,6 +21,7 @@ export default function SideNav() {
       }}
       items={[
         {type: "link", text: "Dashboard", href: "/"},
+        {type: "link", text: "88888", href: "/8"},
         {type: "link", text: "Trades", href: "/trades"},
         {type: "link", text: "cTrader", href: "/ctrader"},
         {type: "link", text: "Sheets", href: "/sheets"},
