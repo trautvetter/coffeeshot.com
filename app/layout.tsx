@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import '@cloudscape-design/global-styles/index.css';
 import {Providers} from "@/app/providers";
+import {ReduxProvider} from "@/lib/providers";
 
 export const metadata: Metadata = {
   title: "coffeeshot.com",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className="antialiased">
-    <Providers>{children}</Providers>
+    <ReduxProvider>
+      <Providers>{children}</Providers>
+    </ReduxProvider>
     </body>
     </html>
   )

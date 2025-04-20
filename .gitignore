@@ -1,9 +1,13 @@
 # Node modules
 node_modules/
+.prisma/
+@prisma/
 
 # Output of builds
 .next/
 out/
+generated/
+.turbo/
 
 # Log files
 npm-debug.log*

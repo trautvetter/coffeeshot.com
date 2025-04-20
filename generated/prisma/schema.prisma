@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model eightyear {
+  id         Int       @id @default(autoincrement())
+  date       DateTime? @db.Date
+  day        String?   @db.VarChar(3)
+  checkedoff Boolean?
+  data       Json?
+}
+
+model foo {
+  id  Int    @id @default(autoincrement())
+  bar String
+  baz Float? @db.Real
+}

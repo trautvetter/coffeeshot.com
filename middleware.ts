@@ -12,12 +12,12 @@ export default withAuth({
       const isLoggedIn = !!token;
       const userGroups = Array.isArray(token?.groups) ? token.groups : [];
 
-      console.log("🔐 Middleware auth check:", {
-        path,
-        isLoggedIn,
-        groups: token?.groups,
-        userGroups,
-      });
+      // console.log("🔐 Middleware auth check:", {
+      //   path,
+      //   isLoggedIn,
+      //   groups: token?.groups,
+      //   userGroups,
+      // });
 
       const isPublic = PUBLIC_PATHS.some(p => path.startsWith(p));
       if (isPublic) return true;

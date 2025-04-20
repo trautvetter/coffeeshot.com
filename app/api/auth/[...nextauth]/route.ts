@@ -16,6 +16,9 @@ if (!process.env.COGNITO_ISSUER) {
 if (!process.env.SECRET) {
   console.warn('Missing environment variable "SECRET"');
 }
+if (!process.env.SESSION_DOMAIN) {
+  console.warn('Missing environment variable "SESSION_DOMAIN"');
+}
 
 const providers: Provider[] = [
   CognitoProvider({
@@ -48,7 +51,7 @@ const handler = NextAuth({
         httpOnly: true,
         sameSite: "lax",
         path: '/',
-        domain: useSecureCookies ? '.coffeeshot-com.vercel.app' : undefined,
+        domain: useSecureCookies ? '.coffeeshot.vercel.app' : undefined,
         secure: useSecureCookies,
       },
     },

@@ -1,4 +1,4 @@
-import { neon } from "@neondatabase/serverless";
+import {neon} from "@neondatabase/serverless";
 
 if (!process.env.DATABASE_URL) {
   throw new Error(
@@ -11,9 +11,3 @@ export async function getPgVersion() {
   const result = await sql`SELECT version()`;
   return result[0].version;
 }
-
-export async function getFoo() {
-  const result = await sql`SELECT * FROM foo`;
-  return result;
-}
-
