@@ -21,11 +21,44 @@ export default function SideNav() {
       }}
       items={[
         {type: "link", text: "Dashboard", href: "/"},
+        {
+          type: "expandable-link-group",
+          text: "Trades",
+          href: "/trades",
+          items: [
+            {
+              type: "link",
+              text: "Live trading",
+              href: "#/parent-page/child-page1"
+            },
+            {
+              type: "link",
+              text: "Back testing",
+              href: "#/parent-page/child-page2"
+            }
+          ]
+        },
         {type: "link", text: "88888", href: "/8"},
         {type: "link", text: "Trades", href: "/trades"},
         {type: "link", text: "cTrader", href: "/ctrader"},
         {type: "link", text: "Sheets", href: "/sheets"},
-        {type: "link", text: "Economic Events", href: "/events"},
+        {
+          type: "expandable-link-group",
+          text: "Economic Events",
+          href: "/events",
+          items: [
+            {
+              type: "link",
+              text: "Israel v Iran [2025-06-13]",
+              href: "/events/studies/2005-06-13-israel-iran"
+            },
+            {
+              type: "link",
+              text: "Liberation Day",
+              href: "#/parent-page/child-page2"
+            }
+          ]
+        },
         {type: "divider"},
         {
           type: "link",

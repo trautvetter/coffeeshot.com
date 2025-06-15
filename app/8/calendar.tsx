@@ -120,6 +120,7 @@ export default function Calendar({onDayClickAction}: { onDayClickAction: (day: e
             >
               {/*<Icon name="check"/>*/}
               <StatusIndicator></StatusIndicator>
+              {/*<s>{day?.date ? String(new Date(day.date).getDate()).padStart(2, '0') : ''}</s>*/}
             </Link>
           ) : (
             <Link
@@ -148,7 +149,10 @@ export default function Calendar({onDayClickAction}: { onDayClickAction: (day: e
       }
       columnDefinitions={generateCalendarColumns()}
       enableKeyboardNavigation
-      stickyColumns={{first: 1, last: 9}}
+      stickyColumns={{
+        first: 1,
+        last: new Date().getDate() > 12 ? 19 : 9
+      }}
       stickyHeader
       stripedRows
       items={months}
@@ -168,7 +172,7 @@ export default function Calendar({onDayClickAction}: { onDayClickAction: (day: e
           </SpaceBetween>
         </Box>
       }
-      header={<Header> Simple table </Header>}
+      //header={<Header> Simple table </Header>}
     />
   );
 }

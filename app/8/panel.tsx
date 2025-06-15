@@ -6,7 +6,7 @@ import {Container, ContentLayout, Header} from "@cloudscape-design/components";
 import {useSelector} from "react-redux";
 import {RootState} from "@/lib/store/store";
 import {useGetEightyearsQuery, useUpdateEightyearMutation} from "@/services/eightyearApi";
-import EightyearProgress from "@/components/eightYearProgress";
+import EightYearProgress from "@/components/widget/EightYearProgress";
 
 export default function Panel() {
   const selectedId = useSelector((state: RootState) => state.panel.selectedId);
@@ -39,7 +39,7 @@ export default function Panel() {
             </Header>
           }
         >
-          <EightyearProgress/>
+          <EightYearProgress/>
         </Container>
       }
     >
