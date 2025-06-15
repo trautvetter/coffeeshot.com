@@ -1,9 +1,10 @@
 // lib/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import { productApi } from '@/services/api';
+import { productApi } from '@/services/productApi';
 import { fooApi } from '@/services/fooApi';
 import {eightyearApi} from "@/services/eightyearApi";
 import panelReducer from '../data/slices/panelSlice';
+import {tradeApi} from "@/services/tradeApi";
 
 export const store = configureStore({
   reducer: {
@@ -11,12 +12,14 @@ export const store = configureStore({
     [fooApi.reducerPath]: fooApi.reducer,
     [eightyearApi.reducerPath]: eightyearApi.reducer,
     panel: panelReducer,
+    [tradeApi.reducerPath]: tradeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       productApi.middleware,
       fooApi.middleware,
       eightyearApi.middleware,
+      tradeApi.middleware,
     ),
 });
 

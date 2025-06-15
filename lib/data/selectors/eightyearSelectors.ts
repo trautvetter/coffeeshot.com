@@ -9,6 +9,22 @@ export const selectEightyears = (state: RootState) =>
 export const selectEightyearStats = createSelector(
   [selectEightyears],
   (eightyears: eightyear[]) => {
+
+    if (!eightyears) {
+      throw new Error("eightyears is undefined — check if API data is properly loaded in state.eightyearApi");
+    }
+
+    if (eightyears.length === 0) {
+      return {
+        total: 0,
+        completed: 0,
+        remaining: 0,
+        percentage: 0,
+        startDate: new Date(),
+        endDate: new Date()
+      };
+    }
+
     const total = eightyears.length;
     const completed = eightyears.filter(e => e.checkedoff).length;
     const remaining = total - completed;

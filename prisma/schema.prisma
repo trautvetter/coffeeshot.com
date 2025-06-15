@@ -21,3 +21,250 @@ model foo {
   bar String
   baz Float? @db.Real
 }
+
+model trade {
+  id         Int      @id @default(autoincrement())
+  tradeId    String?  @db.VarChar(12)
+  symbol     String   @db.VarChar(12)
+  side       String   @db.VarChar(4)
+  datetime   DateTime @db.Date
+  strategy   String?  @db.VarChar(4)
+  inverted   Boolean?
+  risk       Decimal? @db.Decimal(4, 2)
+  reward     Decimal? @db.Decimal(4, 2)
+  screenshot String?
+}
+
+model ctClosePositionDetail {
+  id Int @id @default(autoincrement())
+
+  /// Deal ID this closing detail is associated with.
+  dealId String @unique
+
+  /// Position price at the moment of filling the closing order.
+  entryPrice Float
+
+  /// Amount of realized gross profit after closing deal execution.
+  grossProfit BigInt
+
+  /// Amount of realized swap related to closed volume.
+  swap BigInt
+
+  /// Amount of realized commission related to closed volume.
+  commission BigInt
+
+  /// Account balance after closing deal execution.
+  balance BigInt
+
+  /// Quote/Deposit currency conversion rate on the time of closing deal execution.
+  quoteToDepositConversionRate Float?
+
+  /// Closed volume in cents.
+  closedVolume BigInt?
+
+  /// Balance version of the account related to closing deal operation.
+  balanceVersion BigInt?
+
+  /// Specifies the exponent of the monetary values. Affects grossProfit, swap, commission, balance, pnlConversionFee.
+  moneyDigits Int?
+
+  /// Fee for conversion applied to the Deal in account's currency when trader symbol's quote asset id <-> depositAssetId.
+  pnlConversionFee BigInt?
+
+  deal ctDeal[]
+}
+
+model ctDeal {
+  id Int @id @default(autoincrement())
+
+  /// The unique ID of the execution deal.
+  dealId String @map("dealId")
+
+  /// Source order of the deal.
+  orderId String
+
+  /// Source position of the deal.
+  positionId String
+
+  /// Volume sent for execution, in cents.
+  volume Int
+
+  /// Filled volume, in cents.
+  filledVolume Int
+
+  /// The unique identifier of the symbol in specific server environment within cTrader platform.
+  symbolId String
+
+  /// The Unix time in milliseconds when the deal was sent for execution.
+  createTimestamp BigInt
+
+  /// The Unix time in milliseconds when the deal was executed.
+  executionTimestamp BigInt
+
+  /// The Unix time in milliseconds when the deal was created, executed or rejected.
+  utcLastUpdateTimestamp BigInt?
+
+  /// Execution price.
+  executionPrice Float?
+
+  /// Buy/Sell.
+  tradeSide ctTradeSide
+
+  /// Status of the deal.
+  dealStatus ctDealStatus
+
+  /// Rate for used margin computation. Represented as Base/Deposit.
+  marginRate Float?
+
+  /// Amount of trading commission associated with the deal.
+  commission BigInt?
+
+  /// Base to USD conversion rate on the time of deal execution.
+  baseToUsdConversionRate Float?
+
+  /// Closing position detail. Valid only for closing deal.
+  closePositionDetail ctClosePositionDetail? @relation(fields: [dealId], references: [dealId])
+
+  /// Specifies the exponent of the monetary values. Affects commission.
+  moneyDigits Int?
+}
+
+model ctPosition {
+  id Int @id @default(autoincrement())
+
+  /// The unique ID of the position.
+  positionId String
+
+  /// Position details. See TradeData.
+  tradeData ctTradeData @relation(fields: [ctTradeDataId], references: [id])
+
+  /// Current status of the position.
+  positionStatus ctPositionStatus
+
+  /// Total amount of charged swap on open position.
+  swap BigInt
+
+  /// VWAP price of the position based on all executions (orders) linked to the position.
+  price Float?
+
+  /// Current stop loss price.
+  stopLoss Float?
+
+  /// Current take profit price.
+  takeProfit Float?
+
+  /// The Unix time in milliseconds of the last change of the position.
+  utcLastUpdateTimestamp BigInt?
+
+  /// Current unrealized commission related to the position.
+  commission BigInt?
+
+  /// Rate for used margin computation. Represented as Base/Deposit.
+  marginRate Float?
+
+  /// Amount of unrealized commission related to following of strategy provider.
+  mirroringCommission BigInt?
+
+  /// If TRUE then position's stop loss is guaranteedStopLoss.
+  guaranteedStopLoss Boolean?
+
+  /// Amount of margin used for the position in deposit currency.
+  usedMargin BigInt?
+
+  /// Stop trigger method for SL/TP of the position.
+  stopLossTriggerMethod ctOrderTriggerMethod?
+
+  /// Specifies the exponent of the monetary values.
+  moneyDigits Int?
+
+  /// If TRUE then the Trailing Stop Loss is applied.
+  trailingStopLoss Boolean?
+
+  ctTradeDataId    Int
+}
+
+model ctTradeData {
+  id Int @id @default(autoincrement())
+
+  /// The unique identifier of the symbol in specific server environment within cTrader platform.
+  symbolId String
+
+  /// Volume in cents (e.g. 1000 in protocol means 10.00 units).
+  volume BigInt
+
+  /// Buy, Sell.
+  tradeSide ctTradeSide
+
+  /// The Unix time in milliseconds when position was opened or order was created.
+  openTimestamp BigInt?
+
+  /// Text label specified during order request.
+  label String?
+
+  /// If TRUE then position/order stop loss is guaranteedStopLoss.
+  guaranteedStopLoss Boolean?
+
+  /// User-specified comment.
+  comment String?
+
+  /// Specifies the units in which the Symbol is denominated.
+  measurementUnits String?
+
+  /// The Unix time in milliseconds when a Position was closed.
+  closeTimestamp BigInt?
+
+  position ctPosition[]
+}
+
+enum ctPositionStatus {
+  /// Position is open.
+  OPEN @map("1")
+
+  /// Position is closed.
+  CLOSED @map("2")
+
+  /// Empty position is created for pending order.
+  CREATED @map("3")
+
+  /// Position is in an error state.
+  ERROR @map("4")
+}
+
+enum ctOrderTriggerMethod {
+  /// Stop Order: buy is triggered by ask, sell by bid; Stop Loss Order: for buy position is triggered by bid and for sell position by ask.
+  TRADE @map("1")
+
+  /// Stop Order: buy is triggered by bid, sell by ask; Stop Loss Order: for buy position is triggered by ask and for sell position by bid.
+  OPPOSITE @map("2")
+
+  /// The same as TRADE, but trigger is checked after the second consecutive tick.
+  DOUBLE_TRADE @map("3")
+
+  /// The same as OPPOSITE, but trigger is checked after the second consecutive tick.
+  DOUBLE_OPPOSITE @map("4")
+}
+
+enum ctTradeSide {
+  BUY  @map("1")
+  SELL @map("2")
+}
+
+enum ctDealStatus {
+  /// Deal filled.
+  FILLED @map("2")
+
+  /// Deal is partially filled.
+  PARTIALLY_FILLED @map("3")
+
+  /// Deal is correct but was rejected by liquidity provider (e.g. no liquidity).
+  REJECTED @map("4")
+
+  /// Deal rejected by server (e.g. no price quotes).
+  INTERNALLY_REJECTED @map("5")
+
+  /// Deal is rejected by LP due to error (e.g. symbol is unknown).
+  ERROR @map("6")
+
+  /// Liquidity provider did not send response on the deal during specified execution time period.
+  MISSED @map("7")
+}

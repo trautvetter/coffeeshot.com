@@ -15,7 +15,7 @@ export async function updateEightyear(id: string, checkedoff: boolean, data: Pri
     throw new Error(`Invalid ID: ${id} is not a number`);
   }
 
-  return await prisma.eightyear.update({
+  return prisma.eightyear.update({
     where: {id: parsedId},
     data: {
       checkedoff: checkedoff,

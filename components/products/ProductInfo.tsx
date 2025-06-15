@@ -1,5 +1,5 @@
 import {ProductInfoProps} from "@/types/Product";
-import {useGetProductQuery} from "@/services/api";
+import {useGetProductQuery} from "@/services/productApi";
 import React from "react";
 
 export function ProductInfo({id}: ProductInfoProps) {
